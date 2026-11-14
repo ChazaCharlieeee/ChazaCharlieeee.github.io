@@ -1,0 +1,1023 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f0f0e4">
+  <meta name="description" content="Hello, my name is Charlie. Find my contact links and accounts.">
+  <title>Hello, my name is Charlie</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --background: #f7f3e9;
+      --yellow: #ffd05a;
+      --black: #201d19;
+      --coral: #e86f50;
+      --paper: #fffdf8;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      min-height: 100svh;
+      margin: 0;
+      background-color: var(--background);
+      background-image:
+        radial-gradient(circle, rgba(32, 29, 25, .075) 1px, transparent 1.5px),
+        radial-gradient(ellipse at 12% 18%, rgba(255, 208, 90, .22), transparent 34%),
+        radial-gradient(ellipse at 88% 82%, rgba(232, 111, 80, .11), transparent 32%);
+      background-size: 24px 24px, auto, auto;
+      color: var(--black);
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .topbar {
+      display: flex;
+      width: min(1254px, 84.6vw);
+      height: 72px;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    .topbar nav {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .menu-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 13px;
+      border: 1.5px solid rgba(32, 29, 25, .22);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, .74);
+      color: var(--black);
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: opacity .18s ease, transform .18s ease;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .menu-toggle::-webkit-details-marker { display: none; }
+
+    .menu-toggle::after {
+      width: 7px;
+      height: 7px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      content: "";
+      transform: translateY(-2px) rotate(45deg);
+      transition: transform .18s ease;
+    }
+
+    .dropdown[open] .menu-toggle::after {
+      transform: translateY(2px) rotate(225deg);
+    }
+
+    .menu-toggle:hover {
+      opacity: .7;
+      transform: translateY(-1px);
+    }
+
+    .menu-toggle:focus-visible,
+    .dropdown-menu a:focus-visible,
+    .hello-button:focus-visible,
+    .dialog-close:focus-visible,
+    .game-restart:focus-visible {
+      outline: 3px solid var(--coral);
+      outline-offset: 5px;
+    }
+
+    .dropdown-menu {
+      display: grid;
+      position: absolute;
+      z-index: 2;
+      top: calc(100% + 10px);
+      left: -12px;
+      min-width: 205px;
+      gap: 2px;
+      margin: 0;
+      padding: 8px;
+      border: 1.5px solid var(--black);
+      border-radius: 14px;
+      background: var(--paper);
+      box-shadow: 4px 5px 0 var(--black), 0 12px 24px rgba(32, 29, 25, .12);
+      list-style: none;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--black);
+      font-size: .92rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .dropdown-menu a:hover {
+      background: rgba(255, 208, 90, .55);
+    }
+
+    main {
+      display: flex;
+      min-height: calc(100svh - 72px);
+      align-items: flex-start;
+      justify-content: center;
+      padding: clamp(28px, 7vh, 58px) 24px 48px;
+    }
+
+    .name-card {
+      display: flex;
+      position: relative;
+      isolation: isolate;
+      width: min(1150px, 100%);
+      height: min(77.5vh, 596px);
+      min-height: 430px;
+      flex-direction: column;
+      padding: 0 30px 24px;
+      border: 4px solid var(--black);
+      border-radius: 28px;
+      background: linear-gradient(140deg, #ffdc7e 0%, var(--yellow) 48%, #ffc34b 100%);
+      box-shadow: calc(12px - var(--move-x, 0px)) calc(14px - var(--move-y, 0px)) 0 var(--black), 0 30px 60px rgba(32, 29, 25, .14);
+      transform: perspective(1400px) translate3d(var(--move-x, 0px), var(--move-y, 0px), 0) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg));
+      transition: opacity 1.1s cubic-bezier(.16, 1, .3, 1), translate 1.2s cubic-bezier(.16, 1, .3, 1), scale 1.2s cubic-bezier(.16, 1, .3, 1), filter 1s ease, transform .55s cubic-bezier(.16, 1, .3, 1), box-shadow .55s ease;
+    }
+
+    .name-card::before {
+      position: absolute;
+      z-index: -1;
+      inset: 9px;
+      border: 1px solid rgba(255, 255, 255, .55);
+      border-radius: 19px;
+      content: "";
+      pointer-events: none;
+    }
+
+    .greeting {
+      position: relative;
+      z-index: 1;
+      flex: 0 0 auto;
+      padding-top: clamp(34px, 6.7vh, 60px);
+      text-align: center;
+    }
+
+    .greeting h1 {
+      margin: 0;
+      font-size: clamp(2.6rem, 4vw, 3.6rem);
+      font-weight: 900;
+      letter-spacing: -.055em;
+      line-height: 1;
+    }
+
+    .hello-button {
+      padding: 4px 8px;
+      border: 0;
+      border-radius: 14px;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      letter-spacing: inherit;
+      cursor: pointer;
+      transition: color .2s ease, transform .25s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .hello-button:hover {
+      color: var(--coral);
+      transform: translateY(-3px) rotate(-2deg);
+    }
+
+    .greeting p {
+      margin: 4px 0 0;
+      font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+      font-weight: 800;
+      letter-spacing: -.025em;
+      opacity: .7;
+    }
+
+    .topbar .location {
+      margin-left: 22px;
+      font-size: .9rem;
+      font-weight: 700;
+      letter-spacing: .015em;
+    }
+
+    .name-panel {
+      display: grid;
+      position: relative;
+      min-height: 0;
+      flex: 1 1 auto;
+      place-items: center;
+      margin-top: clamp(22px, 5vh, 38px);
+      overflow: hidden;
+      border: 2px solid var(--black);
+      border-radius: 20px;
+      background: var(--paper);
+      box-shadow: inset 0 0 0 5px rgba(32, 29, 25, .035);
+      isolation: isolate;
+      text-align: center;
+    }
+
+    .name-panel::before {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(32, 29, 25, .08) 1px, transparent 1.5px),
+        radial-gradient(ellipse at center, rgba(255, 208, 90, .25), transparent 58%);
+      background-size: 22px 22px, auto;
+      content: "";
+      pointer-events: none;
+    }
+
+    .topbar nav,
+    .location {
+      transition: opacity .95s cubic-bezier(.16, 1, .3, 1), translate 1.05s cubic-bezier(.16, 1, .3, 1), filter .95s ease;
+    }
+
+    .location {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border: 1.5px solid rgba(32, 29, 25, .22);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, .74);
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      transition-delay: .09s;
+    }
+
+    .location::before {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #5b966a;
+      box-shadow: 0 0 0 3px rgba(91, 150, 106, .14);
+      content: "";
+    }
+
+    .location:hover { background: var(--paper); transform: translateY(-2px); }
+    .location:focus-visible { outline: 3px solid var(--coral); outline-offset: 5px; }
+
+    .name-card {
+      transition-delay: .13s;
+    }
+
+    .intro-pending .topbar nav,
+    .intro-pending .location {
+      opacity: 0;
+      filter: blur(4px);
+      translate: 0 12px;
+    }
+
+    .intro-pending .name-card {
+      opacity: 0;
+      filter: blur(7px);
+      translate: 0 24px;
+      scale: .985;
+    }
+
+    .name-word {
+      position: relative;
+      width: max-content;
+      max-width: 100%;
+      margin: 0;
+      padding: 12px;
+      color: inherit;
+      font-size: clamp(5rem, 12vw, 10.8rem);
+      font-weight: 950;
+      letter-spacing: -.075em;
+      line-height: .9;
+      white-space: nowrap;
+      z-index: 1;
+    }
+
+    .name-letter {
+      display: inline-block;
+      color: inherit;
+      transform: translate3d(var(--letter-x, 0px), var(--letter-y, 0px), 0) rotate(var(--letter-rotation, 0deg)) scale(var(--letter-scale, 1));
+      transition: color .3s ease;
+      will-change: transform;
+    }
+
+    .name-word:hover .name-letter { color: var(--coral); }
+
+    .game-dialog {
+      width: min(460px, calc(100vw - 32px));
+      max-height: min(820px, calc(100vh - 32px));
+      margin: auto;
+      padding: 24px;
+      overflow: auto;
+      border: 2px solid var(--black);
+      border-radius: 24px;
+      background: var(--paper);
+      color: var(--black);
+      box-shadow: 9px 11px 0 var(--black), 0 24px 70px rgba(32, 29, 25, .25);
+    }
+
+    .game-dialog::backdrop {
+      background: rgba(32, 29, 25, .42);
+      backdrop-filter: blur(5px);
+    }
+
+    .game-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .game-eyebrow {
+      margin: 0 0 5px;
+      color: var(--coral);
+      font-size: .7rem;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .game-heading h2 {
+      margin: 0;
+      font-size: clamp(1.5rem, 6vw, 2rem);
+      letter-spacing: -.05em;
+    }
+
+    .dialog-close {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      flex: 0 0 auto;
+      place-items: center;
+      border: 1.5px solid var(--black);
+      border-radius: 50%;
+      background: var(--background);
+      color: inherit;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .dialog-close:hover {
+      transform: rotate(90deg);
+      background: #ffe4dc;
+    }
+
+    .game-instructions {
+      margin: 12px 0 14px;
+      color: rgba(32, 29, 25, .72);
+      font-size: .92rem;
+      line-height: 1.5;
+    }
+
+    .game-scoreboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .game-stat {
+      padding: 8px 10px;
+      border: 1px solid rgba(32, 29, 25, .18);
+      border-radius: 10px;
+      background: var(--background);
+      text-align: center;
+    }
+
+    .game-stat span {
+      display: block;
+      color: rgba(32, 29, 25, .65);
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .game-stat strong {
+      display: block;
+      margin-top: 2px;
+      font-size: 1rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .block-board {
+      display: grid;
+      width: min(100%, 240px);
+      aspect-ratio: 10 / 18;
+      grid-template-columns: repeat(10, minmax(0, 1fr));
+      grid-template-rows: repeat(18, minmax(0, 1fr));
+      gap: 2px;
+      margin: 0 auto;
+      padding: 6px;
+      border: 2px solid var(--black);
+      border-radius: 12px;
+      outline-offset: 4px;
+      background: #292633;
+      box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .08), 3px 4px 0 var(--black);
+      touch-action: none;
+      user-select: none;
+    }
+
+    .block-cell {
+      min-width: 0;
+      min-height: 0;
+      border: 1px solid rgba(255, 255, 255, .035);
+      border-radius: 3px;
+      background: rgba(255, 255, 255, .045);
+    }
+
+    .block-cell.filled {
+      border: 1px solid rgba(32, 29, 25, .4);
+      background: var(--block-color);
+      box-shadow: inset 0 2px rgba(255, 255, 255, .38), inset 0 -2px rgba(32, 29, 25, .16);
+    }
+
+    .game-controls {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .game-control {
+      min-height: 42px;
+      border: 1.5px solid var(--black);
+      border-radius: 10px;
+      background: var(--paper);
+      box-shadow: 2px 3px 0 var(--black);
+      color: inherit;
+      font: inherit;
+      font-size: 1.2rem;
+      font-weight: 900;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+    }
+
+    .game-control:hover {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 2px 0 var(--black);
+      background: var(--background);
+    }
+
+    .game-control[data-action="drop"] {
+      background: var(--yellow);
+      font-size: .76rem;
+      letter-spacing: .04em;
+    }
+
+    .game-control:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
+
+    .game-status {
+      min-height: 2.8em;
+      margin: 14px 0 0;
+      color: rgba(32, 29, 25, .75);
+      font-size: .88rem;
+      line-height: 1.4;
+    }
+
+    .game-restart {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--black);
+      border-radius: 12px;
+      background: var(--yellow);
+      box-shadow: 3px 4px 0 var(--black);
+      color: inherit;
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .game-restart:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 2px 0 var(--black);
+    }
+
+    @media (max-width: 600px) {
+      .topbar {
+        width: 88vw;
+        height: 66px;
+      }
+
+      .topbar nav { gap: 7px; }
+      .menu-toggle { gap: 6px; padding: 8px 10px; font-size: .82rem; }
+      .topbar .location { gap: 6px; margin-left: auto; padding: 8px 10px; font-size: .7rem; }
+
+      main {
+        min-height: calc(100svh - 66px);
+        padding: 8vh 6vw 32px;
+      }
+
+      .name-card {
+        width: 100%;
+        height: 75svh;
+        min-height: 400px;
+        padding: 0 14px 14px;
+        border-width: 4px;
+        border-radius: 22px;
+        box-shadow: calc(9px - var(--move-x, 0px)) calc(10px - var(--move-y, 0px)) 0 var(--black), 0 22px 45px rgba(32, 29, 25, .13);
+      }
+
+      .greeting { padding-top: 40px; }
+      .greeting h1 { font-size: clamp(2.5rem, 12vw, 3.4rem); }
+      .name-panel { margin-top: 28px; border-radius: 16px; }
+      .name-word { font-size: clamp(2.75rem, 15vw, 6rem); }
+      .game-dialog { padding: 20px; }
+      .block-board { width: min(100%, 230px); }
+      .game-controls { gap: 6px; }
+      .game-control { min-height: 40px; }
+    }
+
+    @media (max-height: 650px) and (min-width: 601px) {
+      .name-card { height: 78vh; min-height: 360px; }
+      .greeting { padding-top: 32px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav aria-label="Social profiles">
+      <details class="dropdown">
+        <summary class="menu-toggle">Contacts</summary>
+        <ul class="dropdown-menu">
+          <li><a href="https://github.com/ChazaCharlieeee" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://discord.com/users/723694002410487829" target="_blank" rel="noopener noreferrer">Discord</a></li>
+        </ul>
+      </details>
+      <details class="dropdown">
+        <summary class="menu-toggle">Accounts</summary>
+        <ul class="dropdown-menu">
+          <li><a href="https://steamcommunity.com/profiles/76561199828714826/" target="_blank" rel="noopener noreferrer">Steam</a></li>
+          <li><a href="https://www.roblox.com/users/2705709516/profile" target="_blank" rel="noopener noreferrer">Roblox</a></li>
+          <li><a href="https://play.xbox.com/user/Gillyman742" target="_blank" rel="noopener noreferrer">Xbox</a></li>
+          <li><a href="https://open.spotify.com/user/314exxjlxtivrdvxar4w2hjjfrza" target="_blank" rel="noopener noreferrer">Spotify</a></li>
+        </ul>
+      </details>
+    </nav>
+    <button class="location" type="button" aria-pressed="false">Located in Australia</button>
+  </header>
+
+  <main>
+    <section class="name-card" aria-labelledby="greeting">
+      <div class="greeting">
+        <h1 id="greeting"><button class="hello-button" id="game-launcher" type="button" aria-haspopup="dialog" aria-controls="game-dialog">Hello</button></h1>
+        <p>My name is</p>
+      </div>
+      <div class="name-panel">
+        <h2 class="name-word" aria-label="Charlie"><span class="name-letter" aria-hidden="true">C</span><span class="name-letter" aria-hidden="true">H</span><span class="name-letter" aria-hidden="true">A</span><span class="name-letter" aria-hidden="true">R</span><span class="name-letter" aria-hidden="true">L</span><span class="name-letter" aria-hidden="true">I</span><span class="name-letter" aria-hidden="true">E</span></h2>
+      </div>
+    </section>
+  </main>
+  <dialog class="game-dialog" id="game-dialog" aria-labelledby="game-title">
+    <div class="game-heading">
+      <div>
+        <p class="game-eyebrow">A tiny game</p>
+        <h2 id="game-title">Block drop</h2>
+      </div>
+      <button class="dialog-close" id="game-close" type="button" aria-label="Close game">×</button>
+    </div>
+    <p class="game-instructions">Fit the falling blocks together to clear complete rows. Use arrow keys, or the buttons below.</p>
+    <div class="game-scoreboard" aria-label="Game stats">
+      <div class="game-stat"><span>Score</span><strong id="game-score">0</strong></div>
+      <div class="game-stat"><span>Lines</span><strong id="game-lines">0</strong></div>
+      <div class="game-stat"><span>Level</span><strong id="game-level">1</strong></div>
+    </div>
+    <div class="block-board" id="block-board" role="img" aria-label="Falling blocks board. Use left and right arrows to move, up to rotate, down to drop, and space to hard drop." tabindex="0"></div>
+    <div class="game-controls" aria-label="Game controls">
+      <button class="game-control" type="button" data-action="left" aria-label="Move left">←</button>
+      <button class="game-control" type="button" data-action="rotate" aria-label="Rotate block">↻</button>
+      <button class="game-control" type="button" data-action="down" aria-label="Move block down">↓</button>
+      <button class="game-control" type="button" data-action="right" aria-label="Move right">→</button>
+      <button class="game-control" type="button" data-action="drop" aria-label="Hard drop block">DROP</button>
+    </div>
+    <p class="game-status" id="game-status" role="status" aria-live="polite">Blocks are ready to fall.</p>
+    <button class="game-restart" id="game-restart" type="button" hidden>Play again</button>
+  </dialog>
+  <script>
+    const body = document.body;
+    const card = document.querySelector(".name-card");
+    const nameWord = document.querySelector(".name-word");
+    const letters = [...nameWord.querySelectorAll(".name-letter")];
+    const locationButton = document.querySelector(".location");
+    const gameLauncher = document.querySelector("#game-launcher");
+    const gameDialog = document.querySelector("#game-dialog");
+    const gameClose = document.querySelector("#game-close");
+    const blockBoard = document.querySelector("#block-board");
+    const gameScoreDisplay = document.querySelector("#game-score");
+    const gameLinesDisplay = document.querySelector("#game-lines");
+    const gameLevelDisplay = document.querySelector("#game-level");
+    const gameStatus = document.querySelector("#game-status");
+    const gameRestart = document.querySelector("#game-restart");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const BOARD_COLUMNS = 10;
+    const BOARD_ROWS = 18;
+    const BLOCK_SHAPES = [
+      { cells: [[1, 1, 1, 1]], color: "#50b6ad" },
+      { cells: [[1, 1], [1, 1]], color: "#f0c34e" },
+      { cells: [[0, 1, 0], [1, 1, 1]], color: "#a77be0" },
+      { cells: [[0, 1, 1], [1, 1, 0]], color: "#77bd72" },
+      { cells: [[1, 1, 0], [0, 1, 1]], color: "#ed7180" },
+      { cells: [[1, 0, 0], [1, 1, 1]], color: "#6499e7" },
+      { cells: [[0, 0, 1], [1, 1, 1]], color: "#ee9654" }
+    ];
+    const blockCells = Array.from({ length: BOARD_COLUMNS * BOARD_ROWS }, () => {
+      const cell = document.createElement("span");
+      cell.className = "block-cell";
+      blockBoard.append(cell);
+      return cell;
+    });
+    let settledBlocks = [];
+    let activeBlock = null;
+    let blockTimer = 0;
+    let gameScore = 0;
+    let clearedLines = 0;
+    let gameLevel = 1;
+
+    const updateGameStats = () => {
+      gameScoreDisplay.textContent = String(gameScore);
+      gameLinesDisplay.textContent = String(clearedLines);
+      gameLevelDisplay.textContent = String(gameLevel);
+    };
+
+    const canPlaceBlock = (shape, x, y) => shape.every((row, rowIndex) =>
+      row.every((filled, columnIndex) => {
+        if (!filled) return true;
+        const boardX = x + columnIndex;
+        const boardY = y + rowIndex;
+        if (boardX < 0 || boardX >= BOARD_COLUMNS || boardY >= BOARD_ROWS) return false;
+        return boardY < 0 || !settledBlocks[boardY][boardX];
+      })
+    );
+
+    const renderBlockBoard = () => {
+      const visibleBlocks = settledBlocks.map(row => row.slice());
+      if (activeBlock) {
+        activeBlock.cells.forEach((row, rowIndex) => row.forEach((filled, columnIndex) => {
+          const x = activeBlock.x + columnIndex;
+          const y = activeBlock.y + rowIndex;
+          if (filled && y >= 0 && y < BOARD_ROWS && x >= 0 && x < BOARD_COLUMNS) {
+            visibleBlocks[y][x] = activeBlock.color;
+          }
+        }));
+      }
+
+      blockCells.forEach((cell, index) => {
+        const color = visibleBlocks[Math.floor(index / BOARD_COLUMNS)][index % BOARD_COLUMNS];
+        cell.classList.toggle("filled", Boolean(color));
+        if (color) {
+          cell.style.setProperty("--block-color", color);
+        } else {
+          cell.style.removeProperty("--block-color");
+        }
+      });
+    };
+
+    const stopGame = () => {
+      window.clearInterval(blockTimer);
+      blockTimer = 0;
+    };
+
+    const endGame = () => {
+      stopGame();
+      activeBlock = null;
+      gameRestart.hidden = false;
+      gameStatus.textContent = `Game over! ${gameScore} points and ${clearedLines} lines. Try again?`;
+      renderBlockBoard();
+    };
+
+    const spawnBlock = () => {
+      const next = BLOCK_SHAPES[Math.floor(Math.random() * BLOCK_SHAPES.length)];
+      const cells = next.cells.map(row => row.slice());
+      activeBlock = {
+        cells,
+        color: next.color,
+        x: Math.floor((BOARD_COLUMNS - cells[0].length) / 2),
+        y: 0
+      };
+      if (!canPlaceBlock(cells, activeBlock.x, activeBlock.y)) {
+        endGame();
+        return false;
+      }
+      renderBlockBoard();
+      return true;
+    };
+
+    const setDropSpeed = () => {
+      window.clearInterval(blockTimer);
+      const delay = Math.max(100, 800 * Math.pow(.85, gameLevel - 1));
+      blockTimer = window.setInterval(dropBlock, delay);
+    };
+
+    const clearFullLines = () => {
+      const remainingRows = settledBlocks.filter(row => row.some(cell => !cell));
+      const lineCount = BOARD_ROWS - remainingRows.length;
+      if (!lineCount) return 0;
+
+      settledBlocks = [
+        ...Array.from({ length: lineCount }, () => Array(BOARD_COLUMNS).fill(null)),
+        ...remainingRows
+      ];
+      const pointsByLines = [0, 100, 300, 500, 800];
+      gameScore += pointsByLines[lineCount] * gameLevel;
+      clearedLines += lineCount;
+      gameLevel = Math.floor(clearedLines / 10) + 1;
+      updateGameStats();
+      gameStatus.textContent = `${lineCount} line${lineCount === 1 ? "" : "s"} cleared!`;
+      return lineCount;
+    };
+
+    const lockBlock = () => {
+      const lockedBlock = activeBlock;
+      let toppedOut = false;
+      lockedBlock.cells.forEach((row, rowIndex) => row.forEach((filled, columnIndex) => {
+        if (!filled) return;
+        const x = lockedBlock.x + columnIndex;
+        const y = lockedBlock.y + rowIndex;
+        if (y < 0) {
+          toppedOut = true;
+          return;
+        }
+        settledBlocks[y][x] = lockedBlock.color;
+      }));
+      if (toppedOut) {
+        endGame();
+        return;
+      }
+
+      activeBlock = null;
+      const previousLevel = gameLevel;
+      clearFullLines();
+      if (!spawnBlock()) return;
+      if (gameLevel !== previousLevel) setDropSpeed();
+    };
+
+    const dropBlock = () => {
+      if (!activeBlock) return;
+      if (canPlaceBlock(activeBlock.cells, activeBlock.x, activeBlock.y + 1)) {
+        activeBlock.y += 1;
+        renderBlockBoard();
+      } else {
+        lockBlock();
+      }
+    };
+
+    const moveBlock = (deltaX, deltaY) => {
+      if (!activeBlock) return;
+      if (canPlaceBlock(activeBlock.cells, activeBlock.x + deltaX, activeBlock.y + deltaY)) {
+        activeBlock.x += deltaX;
+        activeBlock.y += deltaY;
+        renderBlockBoard();
+      } else if (deltaY > 0) {
+        lockBlock();
+      }
+    };
+
+    const rotateBlock = () => {
+      if (!activeBlock) return;
+      const rotated = activeBlock.cells[0].map((_, columnIndex) =>
+        activeBlock.cells.map(row => row[columnIndex]).reverse()
+      );
+      for (const offset of [0, -1, 1, -2, 2]) {
+        if (canPlaceBlock(rotated, activeBlock.x + offset, activeBlock.y)) {
+          activeBlock.cells = rotated;
+          activeBlock.x += offset;
+          renderBlockBoard();
+          return;
+        }
+      }
+    };
+
+    const hardDropBlock = () => {
+      if (!activeBlock) return;
+      let droppedRows = 0;
+      while (canPlaceBlock(activeBlock.cells, activeBlock.x, activeBlock.y + 1)) {
+        activeBlock.y += 1;
+        droppedRows += 1;
+      }
+      gameScore += droppedRows * 2;
+      updateGameStats();
+      lockBlock();
+    };
+
+    const startGame = () => {
+      stopGame();
+      settledBlocks = Array.from({ length: BOARD_ROWS }, () => Array(BOARD_COLUMNS).fill(null));
+      activeBlock = null;
+      gameScore = 0;
+      clearedLines = 0;
+      gameLevel = 1;
+      updateGameStats();
+      gameStatus.textContent = "Stack the blocks and clear some lines!";
+      gameRestart.hidden = true;
+      renderBlockBoard();
+      if (spawnBlock()) setDropSpeed();
+      blockBoard.focus();
+    };
+
+    const gameActions = {
+      left: () => moveBlock(-1, 0),
+      right: () => moveBlock(1, 0),
+      down: () => moveBlock(0, 1),
+      rotate: rotateBlock,
+      drop: hardDropBlock
+    };
+
+    document.querySelector(".game-controls").addEventListener("click", event => {
+      const button = event.target.closest("[data-action]");
+      if (!button || !gameDialog.open || !blockTimer) return;
+      gameActions[button.dataset.action]();
+      blockBoard.focus();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (!gameDialog.open || !blockTimer) return;
+      const keyActions = {
+        ArrowLeft: "left",
+        ArrowRight: "right",
+        ArrowDown: "down",
+        ArrowUp: "rotate",
+        " ": "drop"
+      };
+      const action = keyActions[event.key];
+      if (!action) return;
+      event.preventDefault();
+      gameActions[action]();
+    });
+
+    gameLauncher.addEventListener("click", () => {
+      gameDialog.showModal();
+      startGame();
+    });
+
+    gameClose.addEventListener("click", () => gameDialog.close());
+    gameRestart.addEventListener("click", startGame);
+    gameDialog.addEventListener("close", stopGame);
+    gameDialog.addEventListener("click", event => {
+      if (event.target === gameDialog) gameDialog.close();
+    });
+
+    locationButton.addEventListener("click", () => {
+      const isPressed = locationButton.getAttribute("aria-pressed") === "true";
+      locationButton.textContent = isPressed ? "Located in Australia" : "G'day from Australia!";
+      locationButton.setAttribute("aria-pressed", String(!isPressed));
+    });
+
+    if (!reducedMotion) {
+      body.classList.add("intro-pending");
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          body.classList.remove("intro-pending");
+        });
+      });
+    }
+
+    if (!reducedMotion && finePointer) {
+      let targetX = 0;
+      let targetY = 0;
+      let currentX = 0;
+      let currentY = 0;
+      let targetMoveX = 0;
+      let targetMoveY = 0;
+      let currentMoveX = 0;
+      let currentMoveY = 0;
+      let tiltFrame = 0;
+
+      const animateTilt = () => {
+        currentX += (targetX - currentX) * .14;
+        currentY += (targetY - currentY) * .14;
+        currentMoveX += (targetMoveX - currentMoveX) * .14;
+        currentMoveY += (targetMoveY - currentMoveY) * .14;
+        card.style.setProperty("--tilt-x", `${currentX}deg`);
+        card.style.setProperty("--tilt-y", `${currentY}deg`);
+        card.style.setProperty("--move-x", `${currentMoveX}px`);
+        card.style.setProperty("--move-y", `${currentMoveY}px`);
+
+        if (Math.abs(targetX - currentX) > .01 || Math.abs(targetY - currentY) > .01 || Math.abs(targetMoveX - currentMoveX) > .01 || Math.abs(targetMoveY - currentMoveY) > .01) {
+          tiltFrame = window.requestAnimationFrame(animateTilt);
+        } else {
+          currentX = targetX;
+          currentY = targetY;
+          currentMoveX = targetMoveX;
+          currentMoveY = targetMoveY;
+          card.style.setProperty("--tilt-x", `${currentX}deg`);
+          card.style.setProperty("--tilt-y", `${currentY}deg`);
+          card.style.setProperty("--move-x", `${currentMoveX}px`);
+          card.style.setProperty("--move-y", `${currentMoveY}px`);
+          tiltFrame = 0;
+        }
+      };
+
+      card.addEventListener("pointermove", event => {
+        const bounds = card.getBoundingClientRect();
+        const centerX = bounds.left + bounds.width / 2 - currentMoveX;
+        const centerY = bounds.top + bounds.height / 2 - currentMoveY;
+        const x = (event.clientX - centerX) / card.offsetWidth;
+        const y = (event.clientY - centerY) / card.offsetHeight;
+        targetX = x * 3.5;
+        targetY = y * -3.5;
+        targetMoveX = x * 14;
+        targetMoveY = y * 14;
+        if (!tiltFrame) tiltFrame = window.requestAnimationFrame(animateTilt);
+      });
+
+      card.addEventListener("pointerleave", () => {
+        targetX = 0;
+        targetY = 0;
+        targetMoveX = 0;
+        targetMoveY = 0;
+        if (!tiltFrame) tiltFrame = window.requestAnimationFrame(animateTilt);
+      });
+
+      const motion = letters.map(() => ({ x: 0, y: 0, rotation: 0, scale: 1, targetX: 0, targetY: 0, targetRotation: 0, targetScale: 1 }));
+      let pointer = null;
+      let motionFrame = 0;
+
+      const animateLetters = () => {
+        const wordBounds = nameWord.getBoundingClientRect();
+        const maxOffset = window.matchMedia("(max-width: 600px)").matches ? 10 : 34;
+        let settling = false;
+
+        letters.forEach((letter, index) => {
+          const state = motion[index];
+
+          if (pointer) {
+            const letterX = wordBounds.left + letter.offsetLeft + letter.offsetWidth / 2;
+            const letterY = wordBounds.top + letter.offsetTop + letter.offsetHeight / 2;
+            const dx = letterX - pointer.x;
+            const dy = letterY - pointer.y;
+            const distance = Math.hypot(dx, dy);
+            const influence = Math.max(0, 1 - distance / 190) ** 2;
+            const directionX = distance ? dx / distance : (index % 2 ? -1 : 1);
+            const directionY = distance ? dy / distance : -1;
+            const wave = Math.sin((pointer.x - wordBounds.left) * .025 - index * .9) * 4.5;
+
+            state.targetX = directionX * maxOffset * influence;
+            state.targetY = directionY * maxOffset * influence + wave * influence;
+            state.targetRotation = directionX * 13 * influence;
+            state.targetScale = 1 + .16 * influence;
+          } else {
+            state.targetX = 0;
+            state.targetY = 0;
+            state.targetRotation = 0;
+            state.targetScale = 1;
+          }
+
+          state.x += (state.targetX - state.x) * .18;
+          state.y += (state.targetY - state.y) * .18;
+          state.rotation += (state.targetRotation - state.rotation) * .18;
+          state.scale += (state.targetScale - state.scale) * .18;
+          letter.style.setProperty("--letter-x", `${state.x}px`);
+          letter.style.setProperty("--letter-y", `${state.y}px`);
+          letter.style.setProperty("--letter-rotation", `${state.rotation}deg`);
+          letter.style.setProperty("--letter-scale", state.scale);
+
+          if (Math.abs(state.targetX - state.x) > .08 || Math.abs(state.targetY - state.y) > .08 || Math.abs(state.targetRotation - state.rotation) > .08 || Math.abs(state.targetScale - state.scale) > .001) {
+            settling = true;
+          }
+        });
+
+        if (settling) {
+          motionFrame = window.requestAnimationFrame(animateLetters);
+        } else {
+          motionFrame = 0;
+        }
+      };
+
+      nameWord.addEventListener("pointermove", event => {
+        pointer = { x: event.clientX, y: event.clientY };
+        if (!motionFrame) motionFrame = window.requestAnimationFrame(animateLetters);
+      });
+
+      nameWord.addEventListener("pointerleave", () => {
+        pointer = null;
+        if (!motionFrame) motionFrame = window.requestAnimationFrame(animateLetters);
+      });
+    }
+  </script>
+</body>
+</html>
